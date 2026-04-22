@@ -65,7 +65,7 @@ public:
 	{
 		for (auto& elec : m_elecs)
 		{
-			if (elec == nullptr)continue;
+			//if (elec == nullptr)continue;
 
 			if (!elec->IsActive())
 			{
