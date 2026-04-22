@@ -1,0 +1,16 @@
+Space Texture/Stage/space.png
+Nebula Texture/Stage/nebula.png
+Star Texture/Stage/star.png
+Player Texture/Chara/Player/player.png
+NormalEnemy Texture/Chara/Enemy/NormalEnemy.png
+LuckyEnemy Texture/Chara/Enemy/LuckyEnemy.png
+AreaEnemy Texture/Chara/Enemy/AreaEnemy.png
+ItemEnemy Texture/Chara/Enemy/ItemEnemy.png
+Boss Texture/Chara/Enemy/Boss.png
+NormalBullet Texture/Bullet/NormalBullet.png
+ChargeBullet Texture/Bullet/ChargeBullet.png
+EnemyBullet Texture/Bullet/EnemyBullet.png
+StaticElec Texture/Effect/StaticElectricity.png
+ShockWave Texture/Effect/ShockWave.png
+ChargeAbsorption Texture/Effect/ChargeAbsorption.png
+Explosion Texture/Effect/Explosion.png
