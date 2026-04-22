@@ -65,6 +65,8 @@ public:
 	{
 		for (auto& elec : m_elecs)
 		{
+			if (elec == nullptr)continue;
+
 			if (!elec->IsActive())
 			{
 				elec->Activate(a_pos, a_radiusX, a_radiusY);
@@ -78,6 +80,8 @@ public:
 	{
 		for (auto& shock : m_shocks)
 		{
+			if (shock == nullptr)continue;
+
 			if (!shock->IsActive())
 			{
 				shock->Activate(a_pos, a_scaleX, a_scaleY);				//初期値を指定して表示状態へ移行
@@ -92,6 +96,8 @@ public:
 		
 		for (auto& absorption : m_absorptions)
 		{
+			if (absorption == nullptr)continue;
+
 			if (!absorption->IsActive())
 			{
 				absorption->Activate(a_pos, a_radiusX, a_radiusY);
@@ -105,6 +111,8 @@ public:
 	{
 		for (auto& explosion : m_explosions)
 		{
+			if (explosion == nullptr)continue;
+
 			if (!explosion->IsActive())
 			{
 				explosion->Activate(a_pos);
