@@ -38,6 +38,8 @@ public:
 
 	//========= ゲッター ==========
 	bool IsActive()override {return m_isActive;}
+	//ラベルを取得
+	EffectType GetType()override { return EffectType::Absorption; }
 
 	//========= セッター ==========
 	void SetTex(KdTexture* a_tex) { m_tex = a_tex; }

@@ -1,6 +1,15 @@
 //EffectBase.h
 #pragma once
 
+//ラベル（エフェクトの分類）：EffectManagerクラスで使用する
+enum class EffectType
+{
+	StaticElec,
+	Shock,
+	Absorption,
+	Exp
+};
+
 //前方宣言
 class C_GameScene;
 
@@ -14,14 +23,17 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	//変数「m_isActive」の真偽値を取得する
-	virtual bool IsActive() = 0;
-
 	//引数の角度からラジアン値を算出する
 	float CalcRadian(float a_deg);
 
 	//乱数
 	float Rnd(float a_min, float a_max);
+
+	//=========== ゲッター =========
+	//変数「m_isActive」の真偽値を取得する
+	virtual bool IsActive() = 0;
+	//各エフェクトのラベルを取得する
+	virtual EffectType GetType() = 0;
 
 private:
 

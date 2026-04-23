@@ -37,6 +37,8 @@ public:
 
 	//========= ゲッター ==========
 	bool IsActive()override { return m_isActive; }
+	//ラベルを取得
+	EffectType GetType()override { return EffectType::Shock; }
 
 	//========= デバッグ ==========
 	void eImGui() {}
