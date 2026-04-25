@@ -10,8 +10,8 @@ using namespace std;
 class C_ShockWave:public C_EffectBase
 {
 public:
-	C_ShockWave(){}
-	~C_ShockWave(){}
+	C_ShockWave() { m_isActive = false; }
+	~C_ShockWave()override{}
 
 	void Init(C_GameScene *a_pGameScene)override;
 	void Update(const Math::Vector2& a_centerPos = { 0,0 })override;
@@ -20,16 +20,19 @@ public:
 	//行列プログラムをまとめる関数
 	void UpdateMatrix();
 
-	//ShockWaveの表示処理
+	//表示処理
 	void Activate(Math::Vector2 a_pos,float a_scaleX,float a_scaleY);
 
-	//ShockWaveを拡大させる
+	//非表示処理
+	void Deactivate();
+
+	//拡大処理
 	void ExpandShockWave();
 
 	//フェード処理
 	void Fade();
 
-	//ShockWaveを初期状態に戻す
+	//初期状態に戻す
 	void ResetToDefault();
 
 	//========= セッター ==========

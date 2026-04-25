@@ -17,7 +17,7 @@ class C_EffectBase
 {
 public:
 	C_EffectBase(){}
-	~C_EffectBase(){}
+	virtual ~C_EffectBase(){}
 
 	virtual void Init(C_GameScene* a_pGameScene) = 0;
 	virtual void Update(const Math::Vector2& a_centerPos = { 0,0 }) = 0;

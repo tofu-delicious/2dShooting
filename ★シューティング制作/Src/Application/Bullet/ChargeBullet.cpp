@@ -35,10 +35,10 @@ void C_ChargeBullet::Update(const Math::Vector2& a_playerPos)
 	if (m_move.y == 0.0f)
 	{
 		//静電気エフェクトの描画処理
-		EFFECTMANAGER.CreateStaticElec(m_pos, m_scaledRadius, m_scaledRadius);
+		EFFECTMANAGER.EmitStaticElec(m_pos, m_scaledRadius, m_scaledRadius);
 
 		//光の粒子エフェクトの描画処理
-		EFFECTMANAGER.CreateAbsorption(m_pos, m_scaledRadius, m_scaledRadius);
+		EFFECTMANAGER.EmitAbsorption(m_pos, m_scaledRadius, m_scaledRadius);
 
 		//チャージする処理
 		if (m_isPressed)
@@ -58,7 +58,7 @@ void C_ChargeBullet::Update(const Math::Vector2& a_playerPos)
 			SOUNDMANAGER.Play("Shot",false);
 
 			//衝撃波エフェクトの描画処理
-			EFFECTMANAGER.CreateShockWave(m_pos, m_scaleX, m_scaleY);
+			EFFECTMANAGER.EmitShockWave(m_pos, m_scaleX, m_scaleY);
 
 			m_move.y = MOVE_SPEED_Y;
 		}
@@ -66,6 +66,12 @@ void C_ChargeBullet::Update(const Math::Vector2& a_playerPos)
 	//チャージ攻撃が移動している場合
 	else
 	{
+		//静電気エフェクトの非表示処理
+		EFFECTMANAGER.DeleteStaticElec();
+
+		//吸い込みエフェクトの非表示処理
+		EFFECTMANAGER.DeleteChargeAbsorption();
+
 		//チャージ攻撃をためる音を停止
 		SOUNDMANAGER.Stop("Charge");
 

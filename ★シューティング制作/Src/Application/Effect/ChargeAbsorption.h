@@ -7,8 +7,8 @@ class C_GameScene;
 class C_ChargeAbsorption:public C_EffectBase
 {
 public:
-	C_ChargeAbsorption(){}
-	~C_ChargeAbsorption(){}
+	C_ChargeAbsorption() { m_isActive = false; }
+	~C_ChargeAbsorption()override{}
 
 	void Init(C_GameScene* a_pGameScene)override;
 	void Update(const Math::Vector2 &a_centerPos = {0,0})override;
@@ -55,7 +55,7 @@ private:
 	static constexpr float ROTATION_SPEED = 10.0f;		//エフェクトの回転速度
 	static constexpr float ABSORPTION_SPEED = 1.5f;		//半径を減らす数値
 
-	static constexpr float INITIAL_SCALE = 0.15f;		//生成時のScale値
+	static constexpr float INITIAL_SCALE = 0.35f;		//生成時のScale値
 	static constexpr float SPAWN_RADIUS_OFFSET = 10.0f;	//生成位置の調整
 
 	static constexpr float MAX_ROTATE = 360.0f;			//傾きの最大値

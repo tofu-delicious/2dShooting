@@ -14,27 +14,14 @@ void C_ChargeAbsorption::Init(C_GameScene *a_pGameScene)
 	m_alpha = 1.0f;
 	m_fadeStep = -0.02f;
 	m_rect = { 0,0,16,16 };
-	m_isActive = true;
+	m_isActive = false;
 
 	m_pGameScene = a_pGameScene;
 }
 
 void C_ChargeAbsorption::Update(const Math::Vector2 &a_centerPos)
 {
-	////ChargeBulletの情報を取得
-	//m_pChargeBullet = BULLETMANAGER.GetChargeBullet();
-
-	//if (m_pChargeBullet != nullptr)
-	//{
-	//	m_bulletPos = m_pChargeBullet->GetPos();				//座標を取得
-	//	m_bulletMove = m_pChargeBullet->GetMove();				//移動量を取得
-	//	m_isBulletActive = m_pChargeBullet->IsActive();			//変数「m_isActive」の真偽値を取得
-	//}
-
-	//bool isCharging = (m_isBulletActive && m_bulletMove.y == 0.0f);	//チャージ攻撃が表示状態かつ、発射していなければtrueを返す
-
-	////光の粒子の非表示処理（ChargeBulletがチャージ中でない場合は非表示にする）
-	//if (!isCharging) Deactivate();
+	Fade();
 
 	MoveAbsorption(a_centerPos);
 

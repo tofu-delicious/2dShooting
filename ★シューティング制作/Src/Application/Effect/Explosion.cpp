@@ -56,7 +56,7 @@ void C_Explosion::Activate(Math::Vector2 a_pos)
 	m_isActive = true;
 }
 
-void C_Explosion::Deactive()
+void C_Explosion::Deactivate()
 {
 	m_isActive = false;
 }

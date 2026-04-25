@@ -10,8 +10,8 @@ using namespace std;
 class C_Explosion:public C_EffectBase
 {
 public:
-	C_Explosion(){}
-	~C_Explosion(){}
+	C_Explosion() { m_isActive = false; }
+	~C_Explosion()override{}
 
 	void Init(C_GameScene* a_pGameScene) override;
 	void Update(const Math::Vector2& a_centerPos = { 0,0 })override;
@@ -22,11 +22,11 @@ public:
 	//行列プログラムをまとめる関数
 	void UpdateMatrix();
 
-	//ShockWaveの表示処理
+	//表示処理
 	void Activate(Math::Vector2 a_pos);
 
 	//非表示処理
-	void Deactive();
+	void Deactivate();
 
 	//描画範囲の変更
 	void CalcDrawRange();

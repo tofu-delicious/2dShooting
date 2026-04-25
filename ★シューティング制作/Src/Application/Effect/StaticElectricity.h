@@ -10,8 +10,8 @@ using namespace std;
 class C_StaticElectricity:public C_EffectBase
 {
 public:
-	C_StaticElectricity(){}
-	~C_StaticElectricity(){}
+	C_StaticElectricity() { m_isActive = false; }
+	~C_StaticElectricity()override{}
 
 	void Init(C_GameScene* a_pGameScene) override;
 	void Update(const Math::Vector2& a_centerPos = { 0,0 })override;

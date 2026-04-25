@@ -27,88 +27,127 @@ public:
 	{
 		//GameScene型のポインタを取得
 		m_pGameScene = a_pGameScene;
+
+		for (auto& elec : m_elec)
+		{
+			elec.Init(m_pGameScene);
+			elec.SetTex(TEXTUREMANAGER.GetTex("StaticElec"));
+		}
+
+		for (auto& shock : m_shock)
+		{
+			shock.Init(m_pGameScene);
+			shock.SetTex(TEXTUREMANAGER.GetTex("ShockWave"));
+		}
+
+		for (auto& abs : m_abs)
+		{
+			abs.Init(m_pGameScene);
+			abs.SetTex(TEXTUREMANAGER.GetTex("ChargeAbsorption"));
+		}
+
+		for (auto& exp : m_exp)
+		{
+			exp.Init(m_pGameScene);
+			exp.SetTex(TEXTUREMANAGER.GetTex("Explosion"));
+		}
 	}
 
 	//静電気を発生させる
-	void CreateStaticElec(Math::Vector2 a_pos, float a_radiusX, float a_radiusY)
+	void EmitStaticElec(Math::Vector2 a_pos, float a_radiusX, float a_radiusY)
 	{
-		if (CountEffectNum(EffectType::StaticElec) < MAX_ELEC)
+		for (int e = 0;e < MAX_ELEC;e++)
 		{
-			auto elec = make_unique<C_StaticElectricity>();			//インスタンスを生成
-			elec->Init(m_pGameScene);								//預かっているGameSceneを返す
-			elec->SetTex(TEXTUREMANAGER.GetTex("StaticElec"));		//画像セット
-			elec->Activate(a_pos, a_radiusX, a_radiusY);
-			m_effects.push_back(move(elec));	//リストに追加
+			if (!m_elec[e].IsActive())
+			{
+				m_elec[e].Activate(a_pos, a_radiusX, a_radiusY);
+				return;
+			}
 		}
 	}
 
 	//衝撃波を発生させる
-	void CreateShockWave(Math::Vector2 a_pos,float a_scaleX,float a_scaleY)
+	void EmitShockWave(Math::Vector2 a_pos,float a_scaleX,float a_scaleY)
 	{
-		if(CountEffectNum(EffectType::Shock) < MAX_SHOCK)
+		for (int s = 0;s < MAX_SHOCK;s++)
 		{
-			auto shock = make_unique<C_ShockWave>();				//インスタンスを生成
-			shock->Init(m_pGameScene);								//預かっているGameSceneを渡す
-			shock->SetTex(TEXTUREMANAGER.GetTex("ShockWave"));		//画像セット
-			shock->Activate(a_pos, a_scaleX, a_scaleY);				//初期値を指定して表示状態へ移行
-			m_effects.push_back(move(shock));								//リストに追加
+			if (!m_shock[s].IsActive())
+			{
+				m_shock[s].Activate(a_pos, a_scaleX, a_scaleY);
+				return;
+			}
 		}
 	}
 
 	//吸い込みを発生させる
-	void CreateAbsorption(Math::Vector2 a_pos,float a_radiusX,float a_radiusY)
+	void EmitAbsorption(Math::Vector2 a_pos,float a_radiusX,float a_radiusY)
 	{
-		if(CountEffectNum(EffectType::Absorption) < MAX_ABSORPTION)
+		for (int a = 0;a < MAX_ABSORPTION;a++)
 		{
-			auto absorption = make_unique<C_ChargeAbsorption>();
-			absorption->Init(m_pGameScene);
-			absorption->SetTex(TEXTUREMANAGER.GetTex("ChargeAbsorption"));
-			absorption->Activate(a_pos, a_radiusX, a_radiusY);
-			m_effects.push_back(move(absorption));
+			if (!m_abs[a].IsActive())
+			{
+				m_abs[a].Activate(a_pos, a_radiusX, a_radiusY);
+				return;
+			}
 		}
 	}
 
 	//爆発を発生させる（主に敵撃破時）
-	void CreateExplosion(Math::Vector2 a_pos)
+	void EmitExplosion(Math::Vector2 a_pos)
 	{
-		if(CountEffectNum(EffectType::Exp)< MAX_EXPLOSION)
+		for (int x = 0;x < MAX_EXP;x++)
 		{
-			auto explosion = make_unique<C_Explosion>();
-			explosion->Init(m_pGameScene);
-			explosion->SetTex(TEXTUREMANAGER.GetTex("Explosion"));
-			explosion->Activate(a_pos);
-			m_effects.push_back(move(explosion));
+			if (!m_exp[x].IsActive())
+			{
+				m_exp[x].Activate(a_pos);
+				return;
+			}
 		}
+	}
+
+	//静電気を非表示にする
+	void DeleteStaticElec()
+	{
+		for (int e = 0;e < MAX_ELEC;e++)if (m_elec[e].IsActive()) m_elec[e].Deactivate();
+	}
+
+	//衝撃波を非表示にする
+	void DeleteShockWave()
+	{
+		for (int s = 0;s < MAX_SHOCK;s++) if (m_shock[s].IsActive()) m_shock[s].Deactivate();
+	}
+
+	//吸い込みを非表示にする
+	void DeleteChargeAbsorption()
+	{
+		for (int a = 0;a < MAX_ABSORPTION;a++) if (m_abs[a].IsActive()) m_abs[a].Deactivate();
+	}
+
+	//爆発を非表示にする
+	void DeleteExplosion()
+	{
+		for (int x = 0;x < MAX_EXP;x++) if (m_exp[x].IsActive()) m_exp[x].Deactivate();
 	}
 
 	void Update(const Math::Vector2 &a_centerPos)
 	{
-		for (auto& effect : m_effects)
-		{
-			if (effect && effect->IsActive())
-			{
-				effect->Update(a_centerPos);
-			}
-		}
+		for (auto& elec : m_elec) if (elec.IsActive()) elec.Update(a_centerPos);
+		for (auto& shock : m_shock) if (shock.IsActive()) shock.Update(a_centerPos);
+		for (auto& abs : m_abs) if (abs.IsActive()) abs.Update(a_centerPos);
+		for (auto& exp : m_exp) if (exp.IsActive()) exp.Update(a_centerPos);
 	}
 
 	void Draw()
 	{
 		D3D.SetBlendState(BlendMode::Add);	//加算合成モード
 
-		for (auto& effect : m_effects) if (effect) effect->Draw();
+		for (auto& elec : m_elec)if(elec.IsActive()) elec.Draw();
 
 		D3D.SetBlendState(BlendMode::Alpha);
-	}
 
-	//引数のTypeがm_effects内にいくつ存在しているかを数える関数
-	int CountEffectNum(const EffectType& a_effectType)
-	{
-		int activeCount = (int)count_if(m_effects.begin(), m_effects.end(), [a_effectType](const unique_ptr<C_EffectBase>& effect) {
-			return effect && effect->IsActive() && effect->GetType() == a_effectType; // 中身があって、かつActiveなやつをカウント
-			});
-
-		return activeCount;
+		for (auto& shock : m_shock)if (shock.IsActive()) shock.Draw();
+		for (auto& abs : m_abs)if (abs.IsActive()) abs.Draw();
+		for (auto& exp : m_exp)if (exp.IsActive()) exp.Draw();
 	}
 
 	void eImGui(){}
@@ -123,22 +162,17 @@ private:
 	vector<unique_ptr<C_EffectBase>>m_effects;	//全エフェクトを管理するクラス
 	
 	//================= 最大数 =================
-	static constexpr int MAX_ELEC = 20;			//静電気の最大数
+	static constexpr int MAX_ELEC = 15;			//静電気の最大数
 	static constexpr int MAX_SHOCK = 1;			//衝撃波の最大数
-	static constexpr int MAX_ABSORPTION = 40;	//吸い込みエフェクトの最大数
-	static constexpr int MAX_EXPLOSION = 50;	//爆発エフェクトの最大数
+	static constexpr int MAX_ABSORPTION = 30;	//吸い込みエフェクトの最大数
+	static constexpr int MAX_EXP = 50;			//爆発エフェクトの最大数
+
+	//================== 配列 ==================
+	//起動時にコンストラクタが走る
+	C_StaticElectricity m_elec[MAX_ELEC];
+	C_ShockWave m_shock[MAX_SHOCK];
+	C_ChargeAbsorption m_abs[MAX_ABSORPTION];
+	C_Explosion m_exp[MAX_EXP];
 };
 
 #define  EFFECTMANAGER C_EffectManager::GetInstance()
-
-/*
-〇ラムダ式
-★ラムダ式とは？
-　関数のようにその都度定義を行わなくても、その場で処理を記述すること。
-
-★ラムダ式の書式
-　[ ] ( ) { 処理 }
-・[ ]キャプチャ：外側にある変数をラムダ式の中で使いたいときに使用する
-・( )　 引数   ：普通の関数と同様、引数のこと。
-・　　　処理   ：判定結果
-*/

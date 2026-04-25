@@ -59,6 +59,11 @@ void C_ShockWave::Activate(Math::Vector2 a_pos, float a_scaleX, float a_scaleY)
 	UpdateMatrix();
 }
 
+void C_ShockWave::Deactivate()
+{
+	m_isActive = false;
+}
+
 void C_ShockWave::ExpandShockWave()
 {
 	m_scaleX += SCALE_SPEED;

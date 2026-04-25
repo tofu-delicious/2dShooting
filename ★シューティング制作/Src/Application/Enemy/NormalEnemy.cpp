@@ -127,5 +127,5 @@ bool C_NormalEnemy::CanShootBullet()
 void C_NormalEnemy::OnHit()
 {
 	m_isActive = false;
-	EFFECTMANAGER.CreateExplosion(m_pos);
+	EFFECTMANAGER.EmitExplosion(m_pos);
 }
