@@ -12,7 +12,7 @@ public:
 	~C_ChargeBullet(){}
 
 	void Init(C_GameScene* a_pGameScene)override;
-	void Update()override;
+	void Update(const Math::Vector2& a_playerPos = { 0,0 })override;
 	void Draw()override;
 
 	//弾を表示させる
@@ -21,11 +21,14 @@ public:
 	//行列計算
 	void UpdateMatrix();
 
-	//チャージ時間（m_chargeTime）をカウントする
-	void UpdateChargeTime();
+	//チャージ攻撃の拡大処理 & チャージ時間カウント処理
+	void UpdateChargeTime(const Math::Vector2 a_pos);
 
 	//画面外処理
 	bool IsOutOfBounds();
+
+	//チャージ攻撃の入力状態を管理
+	void UpdateChargeInput();
 
 	//初期状態に戻す
 	void ResetToDefault();
@@ -36,6 +39,8 @@ public:
 	//========= ゲッター =========
 	//拡大後の半径「m_scaledRadius」を取得する
 	float GetScaledRadius()const { return m_scaledRadius; }
+	//半径「m_radius」を取得する
+	float GetRadius()const override { return m_scaledRadius > m_radiusX ? m_scaledRadius : m_radiusX; }
 	//チャージ時間「m_chargeTime」を取得する
 	float GetChargeTime()const { return m_chargeTime; }
 	//変数「m_isActive」の真偽値を取得する
@@ -65,6 +70,9 @@ private:
 	static constexpr float CHARGE_INCREMENT = 1.0f;		//chargeTimeの増分
 
 	//======== 状態フラグ =========
+	bool m_isTrigger;	//押した瞬間だけON
+	bool m_isPressed;	//押しっぱなし状態に移行
+	bool m_isRelease;	//離した瞬間だけON
 
 	//========= 動的変数 ==========
 	float m_chargeTime;						//チャージしてからカウントする時間（Lボタンを押してからカウントする）

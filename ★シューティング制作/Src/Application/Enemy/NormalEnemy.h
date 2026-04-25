@@ -1,7 +1,6 @@
 //NormalEnemy.h
 #pragma once
 #include "EnemyBase.h"
-#include "../Manager/TextureManager.h"
 
 //前方宣言
 class C_GameScene;
@@ -13,9 +12,10 @@ public:
 	~C_NormalEnemy() {}
 
 	void Init(C_GameScene* a_GameScene)override;
+	void Action(const Math::Vector2 &a_playerPos)override;
 	void Update()override;
 	void Draw()override;
-	void cImGui()override {}
+	void cImGui()override;
 
 	//行列
 	void UpdateMatrix();
@@ -23,8 +23,17 @@ public:
 	//表示状態にする処理
 	void Activate() override;
 
-	//敵の動き
-	void MoveEnemy() override;
+	//敵の行動パターンを切り替える
+	void ChangeAction(const Math::Vector2& a_playerPos)override;
+
+	//逃げる
+	void MoveEscape()override;
+
+	//急停止する
+	void MoveStop()override;
+
+	//平行移動
+	void MoveParallel()override;
 
 	//敵の攻撃
 	void AttackEnemy() override;
@@ -39,8 +48,6 @@ public:
 	void OnHit()override;
 
 	//========== ゲッター =========
-
-	
 
 private:
 

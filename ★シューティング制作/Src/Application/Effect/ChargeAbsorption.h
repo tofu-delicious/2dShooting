@@ -3,7 +3,6 @@
 #include "EffectBase.h"
 
 class C_GameScene;
-class C_ChargeBullet;
 
 class C_ChargeAbsorption:public C_EffectBase
 {
@@ -12,7 +11,7 @@ public:
 	~C_ChargeAbsorption(){}
 
 	void Init(C_GameScene* a_pGameScene)override;
-	void Update()override;
+	void Update(const Math::Vector2 &a_centerPos = {0,0})override;
 	void Draw()override;
 
 	//行列計算
@@ -28,7 +27,7 @@ public:
 	void CalcDrawPos(Math::Vector2 a_pos, float a_radiusX, float a_radiusY);
 
 	//エフェクトの動き
-	void MoveAbsorption();
+	void MoveAbsorption(const Math::Vector2 &a_centerPos);
 
 	//フェード処理
 	void Fade();
@@ -51,7 +50,6 @@ private:
 
 	//========= 外部参照 ==========
 	C_GameScene* m_pGameScene = nullptr;			//GameSceneクラスのインスタンスを取得
-	C_ChargeBullet* m_pChargeBullet = nullptr;		//ChargeBulletクラスのインスタンスを取得
 
 	//======= 定数・設定値 ========
 	static constexpr float ROTATION_SPEED = 10.0f;		//エフェクトの回転速度
@@ -73,9 +71,4 @@ private:
 
 	//========= 動的変数 ==========
 	float m_orbitRadius;							//円範囲上の初期座標と原点との距離
-	
-	Math::Vector2 m_bulletPos;						//ChargeBulletの座標
-	Math::Vector2 m_bulletMove;						//ChargeBulletの移動量
-	bool m_isBulletActive;							//ChargeBulletが有効かどうか
-
 };

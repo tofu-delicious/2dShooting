@@ -1,5 +1,6 @@
 //Player.cpp
 #include "Scene/GameScene.h"
+#include "Manager/BulletManager.h"
 #include "Player.h"
 
 void C_Player::Init(C_GameScene* a_GameScene)

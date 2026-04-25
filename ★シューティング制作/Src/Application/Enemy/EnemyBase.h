@@ -4,13 +4,24 @@
 //前方宣言
 class C_GameScene;
 
+//敵の行動パターン
+enum class ActionType
+{
+	Action1,
+	Action2,
+	Action3,
+	Action4,
+	Action5
+};
+
 class C_EnemyBase
 {
 public:
 	C_EnemyBase(){}
-	~C_EnemyBase(){}
+	virtual ~C_EnemyBase(){}
 	
 	virtual void Init(C_GameScene *a_GameScene) = 0;
+	virtual void Action(const Math::Vector2 &a_playerPos) = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
@@ -20,14 +31,26 @@ public:
 	//衝突判定後の処理
 	virtual void OnHit() = 0;
 
-	//敵の移動処理
-	virtual void MoveEnemy() = 0;
+	//敵の行動パターンを切り替える
+	virtual void ChangeAction(const Math::Vector2& a_playerPos = { 0,0 }){}
+	
+	//逃げる
+	virtual void MoveEscape(){}
+
+	//急停止
+	virtual void MoveStop(){}
+
+	//平行移動
+	virtual void MoveParallel(){}
 
 	//敵の攻撃処理
 	virtual void AttackEnemy() = 0;
 
 	//敵の効果処理（関数名の意味は「プレイヤーの利益を与える」）
 	virtual void BenefitPlayer() = 0;
+
+	//座標確定処理
+	virtual void CommitMove() { m_pos += m_move; }
 
 	//クールタイムの設定
 	virtual void StartCoolTime(float a_seconds);
@@ -55,6 +78,9 @@ public:
 
 	//========= デバッグ ==========
 	virtual void cImGui() = 0;
+
+	//距離を求める
+	float CalcDistance(const Math::Vector2& a_posA, const Math::Vector2& a_posB);
 
 	//引数の角度からラジアン値を算出する
 	float CalcRadian(float a_deg);

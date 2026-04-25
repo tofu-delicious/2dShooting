@@ -11,7 +11,7 @@ public:
 	virtual ~C_BulletBase(){}
 
 	virtual void Init(C_GameScene* a_pGameScene) = 0;
-	virtual void Update() = 0;
+	virtual void Update(const Math::Vector2& a_playerPos = {0,0}) = 0;
 	virtual void Draw() = 0;
 
 	//Õ“Ë”»’èŒã‚Ìˆ—

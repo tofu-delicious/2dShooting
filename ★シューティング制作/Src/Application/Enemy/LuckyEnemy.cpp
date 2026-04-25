@@ -18,13 +18,18 @@ void C_LuckyEnemy::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_LuckyEnemy::Update()
+void C_LuckyEnemy::Action(const Math::Vector2 &a_playerPos)
 {
-	MoveEnemy();
+	ChangeAction();
 
 	AttackEnemy();
 
 	BenefitPlayer();
+}
+
+void C_LuckyEnemy::Update()
+{
+	CommitMove();
 
 	UpdateMatrix();
 }
@@ -46,7 +51,7 @@ void C_LuckyEnemy::Activate()
 {
 }
 
-void C_LuckyEnemy::MoveEnemy()
+void C_LuckyEnemy::ChangeAction(const Math::Vector2& a_playerPos)
 {
 }
 

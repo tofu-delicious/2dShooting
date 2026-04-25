@@ -18,7 +18,7 @@ void C_EnemyBullet::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_EnemyBullet::Update()
+void C_EnemyBullet::Update(const Math::Vector2& a_playerPos)
 {
 	m_pos += m_move;
 

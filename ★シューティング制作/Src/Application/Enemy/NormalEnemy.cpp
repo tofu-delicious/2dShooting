@@ -1,5 +1,7 @@
 //NormalEnemy.cpp
 #include "../Scene/GameScene.h"
+#include"../Manager/EffectManager.h"
+#include "../Manager/BulletManager.h"
 #include "NormalEnemy.h"
 
 void C_NormalEnemy::Init(C_GameScene* a_pGameScene)
@@ -20,16 +22,25 @@ void C_NormalEnemy::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
+void C_NormalEnemy::Action(const Math::Vector2 &a_playerPos)
+{
+	m_move = { 0,0 };
+
+	//敵の行動
+	ChangeAction(a_playerPos);
+	//弾の発射間隔
+	UpdateCoolTime();
+	//敵の攻撃
+	AttackEnemy();
+	//敵撃破時の効果
+	BenefitPlayer();
+}
+
 void C_NormalEnemy::Update()
 {
-	UpdateCoolTime();
-
-	MoveEnemy();
-
-	AttackEnemy();
-
-	BenefitPlayer();
-
+	//座標確定処理
+	CommitMove();
+	//行列処理
 	UpdateMatrix();
 }
 
@@ -42,6 +53,11 @@ void C_NormalEnemy::Draw()
 	}
 }
 
+void C_NormalEnemy::cImGui()
+{
+	ImGui::Text("enemy : posX:%.1f posY:%.1f", m_pos.x, m_pos.y);
+}
+
 void C_NormalEnemy::UpdateMatrix()
 {
 	m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
@@ -52,16 +68,42 @@ void C_NormalEnemy::UpdateMatrix()
 void C_NormalEnemy::Activate()
 {
 	m_isActive = true;		//表示状態へ移行
-	m_pos = { Rnd(100,1280),Rnd(100,200) };
-	m_move = { 0.0f,0.0f };
+	m_pos = { Rnd(-600,600),Rnd(100,200) };
+	//m_move = { 0.0f,0.0f };
 }
 
-void C_NormalEnemy::MoveEnemy()
+void C_NormalEnemy::ChangeAction(const Math::Vector2 &a_playerPos)
 {
-	m_rotate += 3.0f;
-	if (m_rotate >= 360.0f) m_rotate -= 360.0f;
+	//自身とプレイヤーとの距離を測る
+	float distance = CalcDistance(a_playerPos, m_pos);
 
-	m_pos.x = sinf(CalcRadian(m_rotate)) * 100;
+	//距離が100以下だった場合は「垂直移動」
+	if (distance <= 100) { MoveEscape(); }
+	//距離が100より大きく300以下だった場合は「停止」
+	else if (distance <= 300) { MoveStop(); }
+	//距離が300より大きい場合は「平行移動
+	else if (distance > 300) { MoveParallel(); }
+}
+
+void C_NormalEnemy::MoveEscape()
+{
+	m_rotate += 1.0f;
+	if (m_rotate >= 360.0f) m_rotate -= 360.0f;
+	float radian = CalcRadian(m_rotate);
+	m_move.y = sinf(radian);
+}
+
+void C_NormalEnemy::MoveStop()
+{
+	m_move = { 0,0 };
+}
+
+void C_NormalEnemy::MoveParallel()
+{
+	m_rotate += 1.0f;
+	if (m_rotate >= 360.0f) m_rotate -= 360.0f;
+	float radian = CalcRadian(m_rotate);
+	m_move.x = sinf(radian);
 }
 
 void C_NormalEnemy::AttackEnemy()

@@ -81,9 +81,15 @@ public:
 		}
 	}
 
-	void Update()
+	void Update(const Math::Vector2 &a_centerPos)
 	{
-		for (auto& effect : m_effects) if (effect && effect->IsActive()) effect->Update();
+		for (auto& effect : m_effects)
+		{
+			if (effect && effect->IsActive())
+			{
+				effect->Update(a_centerPos);
+			}
+		}
 	}
 
 	void Draw()

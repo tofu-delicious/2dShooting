@@ -17,7 +17,7 @@ void C_ShockWave::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_ShockWave::Update()
+void C_ShockWave::Update(const Math::Vector2& a_centerPos)
 {
 	if(m_isActive)
 	{

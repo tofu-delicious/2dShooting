@@ -13,6 +13,7 @@ public:
 	~C_Boss() {}
 
 	void Init(C_GameScene* a_GameScene)override;
+	void Action(const Math::Vector2& a_playerPos)override;
 	void Update()override;
 	void Draw()override;
 	void cImGui()override {}
@@ -23,8 +24,17 @@ public:
 	//表示状態にする処理
 	void Activate() override;
 
-	//敵の動き
-	void MoveEnemy() override;
+	//敵の行動パターンを切り替える
+	void ChangeAction(const Math::Vector2& a_playerPos = { 0,0 })override;
+
+	//逃げる
+	void MoveEscape()override;
+
+	//急停止する
+	void MoveStop()override;
+
+	//平行移動
+	void MoveParallel()override;
 
 	//敵の攻撃
 	void AttackEnemy() override;

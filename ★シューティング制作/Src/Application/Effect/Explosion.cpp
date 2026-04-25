@@ -20,7 +20,7 @@ void C_Explosion::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_Explosion::Update()
+void C_Explosion::Update(const Math::Vector2& a_centerPos)
 {
 	//描画範囲変更
 	CalcDrawRange();

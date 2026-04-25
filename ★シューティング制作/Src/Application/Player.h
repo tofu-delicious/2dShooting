@@ -56,6 +56,8 @@ public:
 	//========= ゲッター ==========
 	//プレイヤーの座標情報を取得
 	Math::Vector2 GetPos()const { return m_pos; }
+	//プレイヤーの移動量を取得
+	Math::Vector2 GetMove()const { return m_move; }
 	//プレイヤーのX,Y軸の半径のうち、大きい値を取得
 	float GetRadius()const { return m_radiusX > m_radiusY ? m_radiusX : m_radiusY; }
 	//プレイヤーのX軸の半径を取得

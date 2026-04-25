@@ -14,7 +14,7 @@ public:
 	~C_Explosion(){}
 
 	void Init(C_GameScene* a_pGameScene) override;
-	void Update()override;
+	void Update(const Math::Vector2& a_centerPos = { 0,0 })override;
 	void Draw()override;
 
 public:

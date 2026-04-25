@@ -1,16 +1,17 @@
 //GameScene.h
 #pragma once
 #include "SceneBase.h"
-#include "../Stage.h"
 
-#include "../Player.h"
+//前方宣言
+class C_Stage;
+class C_Player;
 
-#include "../Manager/TextureManager.h"
-#include "../Manager/SoundManager.h"
-#include "../Manager/BulletManager.h"
-#include "../Manager/EffectManager.h"
-#include "../Manager/CollisionManager.h"
-#include "../Manager/EnemyManager.h"
+class C_TextureManager;
+class C_SoundManager;
+class C_BulletManager;
+class C_EffectManager;
+class C_CollisionManager;
+class C_EnemyManager;
 
 //画面端変数
 #define SCREEN_PADDING 8	//内側の余白
@@ -19,18 +20,19 @@
 #define SCREENRIGHT 640		//画面右端
 #define SCREENLEFT -640		//画面左端
 
+using namespace std;
+
 
 class C_GameScene :public C_SceneBase
 {
 private:
 
 	//========= インスタンス ===========
-	C_Stage m_stage;
-
-	C_Player m_player;
+	shared_ptr<C_Stage> m_stage = nullptr;
+	shared_ptr<C_Player>m_player = nullptr;
 
 public:
-	C_GameScene(){}
+	C_GameScene() {}
 	~C_GameScene(){}
 
 	void Init()override;
@@ -39,8 +41,7 @@ public:
 	void ImGui()override;
 
 	//============ ゲッター ============
-
-	C_Player* GetPlayer() { return &m_player; }								//Playerクラスのインスタンス情報を取得する
+	shared_ptr<C_Player> &GetPlayer() {return m_player;}//Playerクラスのインスタンス情報を取得する
 
 private:
 };

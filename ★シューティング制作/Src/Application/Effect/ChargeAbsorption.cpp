@@ -19,24 +19,24 @@ void C_ChargeAbsorption::Init(C_GameScene *a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_ChargeAbsorption::Update()
+void C_ChargeAbsorption::Update(const Math::Vector2 &a_centerPos)
 {
-	//ChargeBulletの情報を取得
-	m_pChargeBullet = BULLETMANAGER.GetChargeBullet();
+	////ChargeBulletの情報を取得
+	//m_pChargeBullet = BULLETMANAGER.GetChargeBullet();
 
-	if (m_pChargeBullet != nullptr)
-	{
-		m_bulletPos = m_pChargeBullet->GetPos();				//座標を取得
-		m_bulletMove = m_pChargeBullet->GetMove();				//移動量を取得
-		m_isBulletActive = m_pChargeBullet->IsActive();			//変数「m_isActive」の真偽値を取得
-	}
+	//if (m_pChargeBullet != nullptr)
+	//{
+	//	m_bulletPos = m_pChargeBullet->GetPos();				//座標を取得
+	//	m_bulletMove = m_pChargeBullet->GetMove();				//移動量を取得
+	//	m_isBulletActive = m_pChargeBullet->IsActive();			//変数「m_isActive」の真偽値を取得
+	//}
 
-	bool isCharging = (m_isBulletActive && m_bulletMove.y == 0.0f);	//チャージ攻撃が表示状態かつ、発射していなければtrueを返す
+	//bool isCharging = (m_isBulletActive && m_bulletMove.y == 0.0f);	//チャージ攻撃が表示状態かつ、発射していなければtrueを返す
 
-	//光の粒子の非表示処理（ChargeBulletがチャージ中でない場合は非表示にする）
-	if (!isCharging) Deactivate();
+	////光の粒子の非表示処理（ChargeBulletがチャージ中でない場合は非表示にする）
+	//if (!isCharging) Deactivate();
 
-	MoveAbsorption();
+	MoveAbsorption(a_centerPos);
 
 	UpdateMatrix();
 }
@@ -96,7 +96,7 @@ void C_ChargeAbsorption::CalcDrawPos(Math::Vector2 a_pos, float a_radiusX, float
 	m_pos.y = a_pos.y + sinf(radian) * m_orbitRadius;
 }
 
-void C_ChargeAbsorption::MoveAbsorption()
+void C_ChargeAbsorption::MoveAbsorption(const Math::Vector2 &a_centerPos)
 {
 	//更新処理
 	m_rotate += ROTATION_SPEED;					//回転速度
@@ -109,8 +109,8 @@ void C_ChargeAbsorption::MoveAbsorption()
 	}
 
 	//移動量を算出する
-	m_pos.x = m_bulletPos.x + cosf(radian) * m_orbitRadius;
-	m_pos.y = m_bulletPos.y + sinf(radian) * m_orbitRadius;
+	m_pos.x = a_centerPos.x + cosf(radian) * m_orbitRadius;
+	m_pos.y = a_centerPos.y + sinf(radian) * m_orbitRadius;
 }
 
 void C_ChargeAbsorption::Fade()

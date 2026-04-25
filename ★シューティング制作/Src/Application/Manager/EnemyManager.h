@@ -24,6 +24,11 @@ public:
 		return Instance;
 	}
 
+	void Init(C_GameScene* a_pGameScene)
+	{
+		m_pGameScene = a_pGameScene;
+	}
+
 	//=========== 生成処理 ============
 	void SpawnNormalEnemy()
 	{
@@ -70,6 +75,15 @@ public:
 		m_enemies.push_back(boss);
 	}
 
+	//=========== 行動処理 ============
+	void Action(const Math::Vector2 &a_playerPos)
+	{
+		for (auto& enemy : m_enemies)
+		{
+			enemy->Action(a_playerPos);
+		}
+	}
+
 	//=========== 更新処理 ============
 	void Update()
 	{
@@ -99,6 +113,15 @@ public:
 		for (auto& enemy : m_enemies)
 		{
 			enemy->Draw();
+		}
+	}
+
+	//=========== デバッグ ============
+	void cImGui()
+	{
+		for (auto& enemy : m_enemies)
+		{
+			enemy->cImGui();
 		}
 	}
 

@@ -58,11 +58,11 @@ public:
 		m_enemyBullets.push_back(bullet);
 	}
 
-	void Update()
+	void Update(const Math::Vector2 &a_playerPos)
 	{
-		UpdateList(m_playerBullets);
+		UpdateList(m_playerBullets,a_playerPos);
 
-		UpdateList(m_enemyBullets);
+		UpdateList(m_enemyBullets,a_playerPos);
 	}
 
 	void Draw()
@@ -113,7 +113,7 @@ private:
 
 	C_BulletManager() {}
 
-	void UpdateList(vector<C_BulletBase*> &a_bullets)
+	void UpdateList(vector<C_BulletBase*> &a_bullets,const Math::Vector2 &a_playerPos)
 	{
 		//全エフェクトをループで更新
 		for (auto it = a_bullets.begin(); it != a_bullets.end();)
@@ -125,7 +125,7 @@ private:
 				continue;
 			}
 
-			(*it)->Update();
+			(*it)->Update(a_playerPos);
 
 			//非表示状態のエフェクトはメモリ解放する
 			if (!(*it)->IsActive())

@@ -14,7 +14,7 @@ public:
 	~C_NormalBullet(){}
 
 	void Init(C_GameScene* a_pGameScene) override;
-	void Update()override;
+	void Update(const Math::Vector2& a_playerPos = { 0,0 })override;
 	void Draw()override;
 
 	//s—ñŒvZ

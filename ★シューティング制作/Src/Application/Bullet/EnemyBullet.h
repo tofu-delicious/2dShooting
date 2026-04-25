@@ -12,7 +12,7 @@ public:
 	~C_EnemyBullet(){}
 
 	void Init(C_GameScene* a_pGameScene)override;
-	void Update()override;
+	void Update(const Math::Vector2& a_playerPos = { 0,0 })override;
 	void Draw()override;
 
 	//弾を表示させる

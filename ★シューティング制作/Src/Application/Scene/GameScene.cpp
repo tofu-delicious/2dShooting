@@ -1,17 +1,28 @@
 //GameScene.cpp
 #include "GameScene.h"
-#include "../Scene.h"
+#include "../Stage.h"
+#include "../Player.h"
+#include "../Manager/TextureManager.h"
+#include "../Manager/SoundManager.h"
+#include "../Manager/BulletManager.h"
+#include "../Manager/EffectManager.h"
+#include "../Manager/CollisionManager.h"
+#include "../Manager/EnemyManager.h"
 
 void C_GameScene::Init()
 {
 	srand(timeGetTime());
 
+	m_stage = make_shared <C_Stage>();
+	m_player = make_shared<C_Player>();
+
 	//========== ‰Šú‰»ŠÖ” ===========
-	m_stage.Init(this,Stage::Saturn);
-	m_player.Init(this);
+	m_stage->Init(this,Stage::Saturn);
+	m_player->Init(this);
 
 	TEXTUREMANAGER.ReadFile("TextureData.txt");
 	SOUNDMANAGER.Init(this);
+	ENEMYMANAGER.Init(this);
 	BULLETMANAGER.Init(this);
 	EFFECTMANAGER.Init(this);
 
@@ -20,25 +31,26 @@ void C_GameScene::Init()
 
 void C_GameScene::Update()
 {
-	m_stage.Update();
+	m_stage->Update();
 
-	m_player.Action();
-	m_player.Update();
-	m_player.LateAction();
+	m_player->Action();
+	m_player->Update();
+	m_player->LateAction();
 
 	//Õ“Ë”»’è
-	COLLISIONMANAGER.AllCollision(m_player, ENEMYMANAGER.GetEnemyList(), BULLETMANAGER.GetPlayerBulletList(), BULLETMANAGER.GetEnemyBulletList());
+	COLLISIONMANAGER.AllCollision(*m_player, ENEMYMANAGER.GetEnemyList(), BULLETMANAGER.GetPlayerBulletList(), BULLETMANAGER.GetEnemyBulletList());
 
+	ENEMYMANAGER.Action(m_player->GetPos());
 	ENEMYMANAGER.Update();
-	BULLETMANAGER.Update();
-	EFFECTMANAGER.Update();
+	BULLETMANAGER.Update(m_player->GetPos());
+	if(BULLETMANAGER.GetChargeBullet() != nullptr)EFFECTMANAGER.Update(BULLETMANAGER.GetChargeBullet()->GetPos());
 }
 
 void C_GameScene::Draw()
 {
-	m_stage.Draw();
+	m_stage->Draw();
 
-	m_player.Draw();
+	m_player->Draw();
 
 	ENEMYMANAGER.Draw();
 	BULLETMANAGER.Draw();
@@ -47,6 +59,7 @@ void C_GameScene::Draw()
 
 void C_GameScene::ImGui()
 {
-	m_player.ImGui();
+	m_player->ImGui();
+	ENEMYMANAGER.cImGui();
 	EFFECTMANAGER.eImGui();
 }

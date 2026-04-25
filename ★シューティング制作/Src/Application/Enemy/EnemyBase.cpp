@@ -1,6 +1,15 @@
 //CharaBase.cpp
 #include "EnemyBase.h"
 
+float C_EnemyBase::CalcDistance(const Math::Vector2& a_posA, const Math::Vector2& a_posB)
+{
+    //差分を計算
+    float dx = a_posA.x - a_posB.x;
+    float dy = a_posA.y - a_posB.y;
+
+    return sqrtf(dx * dx + dy * dy);
+}
+
 float C_EnemyBase::CalcRadian(float a_deg)
 {
     return DirectX::XMConvertToRadians(a_deg);

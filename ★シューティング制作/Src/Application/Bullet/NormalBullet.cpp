@@ -17,7 +17,7 @@ void C_NormalBullet::Init(C_GameScene *a_pGameScene)
 	m_isActive = false;
 }
 
-void C_NormalBullet::Update()
+void C_NormalBullet::Update(const Math::Vector2& a_playerPos)
 {
 	if (m_isActive)
 	{

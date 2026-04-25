@@ -19,13 +19,18 @@ void C_Boss::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_Boss::Update()
+void C_Boss::Action(const Math::Vector2& a_playerPos)
 {
-	MoveEnemy();
+	ChangeAction();
 
 	AttackEnemy();
 
 	BenefitPlayer();
+}
+
+void C_Boss::Update()
+{
+	CommitMove();
 
 	UpdateMatrix();
 }
@@ -47,7 +52,19 @@ void C_Boss::Activate()
 {
 }
 
-void C_Boss::MoveEnemy()
+void C_Boss::ChangeAction(const Math::Vector2& a_playerPos)
+{
+}
+
+void C_Boss::MoveEscape()
+{
+}
+
+void C_Boss::MoveStop()
+{
+}
+
+void C_Boss::MoveParallel()
 {
 }
 

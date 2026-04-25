@@ -1,5 +1,7 @@
 //ChargeBullet.cpp
 #include "../Scene/GameScene.h"
+#include "../Manager/EffectManager.h"
+#include "../Manager/SoundManager.h"
 #include "ChargeBullet.h"
 
 void C_ChargeBullet::Init(C_GameScene *a_pGameScene)
@@ -19,12 +21,15 @@ void C_ChargeBullet::Init(C_GameScene *a_pGameScene)
 
 	m_chargeTime = 0.0f;
 	m_scaledRadius = 0.0f;
+
+	m_isTrigger = false;
+	m_isPressed = false;
+	m_isRelease = false;
 }
 
-void C_ChargeBullet::Update()
+void C_ChargeBullet::Update(const Math::Vector2& a_playerPos)
 {
-	//プレイヤーインスタンス情報取得
-	C_Player* player = m_pGameScene->GetPlayer();
+	UpdateChargeInput();
 
 	//チャージ攻撃が移動していない場合
 	if (m_move.y == 0.0f)
@@ -36,18 +41,18 @@ void C_ChargeBullet::Update()
 		EFFECTMANAGER.CreateAbsorption(m_pos, m_scaledRadius, m_scaledRadius);
 
 		//チャージする処理
-		if (player->IsPressed())
+		if (m_isPressed)
 		{
 			if(!SOUNDMANAGER.IsPlay("Charge"))SOUNDMANAGER.Play("Charge");
 
-			UpdateChargeTime();
+			UpdateChargeTime(a_playerPos);
 		}
 
 		//チャージ中の角度増分は10.0f
 		RotateLoop(HIGH_INCREASE_ANGLE);
 
 		//チャージ攻撃の発射処理
-		if (player->IsRelease())
+		if (m_isRelease)
 		{
 			//チャージ攻撃の発射音
 			SOUNDMANAGER.Play("Shot",false);
@@ -71,10 +76,7 @@ void C_ChargeBullet::Update()
 		RotateLoop(LOW_INCREASE_ANGLE);
 
 		//画面外処理
-		if (IsOutOfBounds())
-		{
-			ResetToDefault();
-		}
+		if (IsOutOfBounds()){ResetToDefault();}
 	}
 
 	//行列計算
@@ -109,12 +111,10 @@ void C_ChargeBullet::UpdateMatrix()
 	m_mat = m_rotateMat * m_scaleMat * m_transMat;
 }
 
-void C_ChargeBullet::UpdateChargeTime()
+void C_ChargeBullet::UpdateChargeTime(const Math::Vector2 a_pos)
 {
-	Math::Vector2 playerPos = m_pGameScene->GetPlayer()->GetPos();
-
-	//プレイヤー座標に補正
-	m_pos = { playerPos.x,playerPos.y + OFFSET_Y };
+	//引数の座標に補正
+	m_pos = { a_pos.x,a_pos.y + OFFSET_Y };
 
 	//最大サイズになればカウント停止
 	if (m_scaleX < MAX_CHARGE_SCALE || m_scaleY < MAX_CHARGE_SCALE)
@@ -133,6 +133,38 @@ void C_ChargeBullet::UpdateChargeTime()
 bool C_ChargeBullet::IsOutOfBounds()
 {
 	return m_pos.y > SCREENTOP + m_scaledRadius;
+}
+
+void C_ChargeBullet::UpdateChargeInput()
+{
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		if (!m_isPressed)
+		{
+			m_isTrigger = true;		//1フレームのみの実行を許可する
+			m_isPressed = true;		//「押しっぱなし」であることを記録
+			m_isRelease = false;	//離されていないためfalseにする
+		}
+		else
+		{
+			m_isTrigger = false;	//2フレーム以降は許可しない
+			m_isRelease = false;
+		}
+	}
+	else
+	{
+		if (m_isPressed)			//もしLボタンが離された直前まで押しっぱなしだった場合
+		{
+			m_isRelease = true;
+		}
+		else                        //もしLボタンが離しっぱなしである場合
+		{
+			m_isRelease = false;
+		}
+
+		m_isTrigger = false;
+		m_isPressed = false;
+	}
 }
 
 void C_ChargeBullet::ResetToDefault()

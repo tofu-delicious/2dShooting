@@ -20,7 +20,7 @@ public:
 	~C_EffectBase(){}
 
 	virtual void Init(C_GameScene* a_pGameScene) = 0;
-	virtual void Update() = 0;
+	virtual void Update(const Math::Vector2& a_centerPos = { 0,0 }) = 0;
 	virtual void Draw() = 0;
 
 	//引数の角度からラジアン値を算出する

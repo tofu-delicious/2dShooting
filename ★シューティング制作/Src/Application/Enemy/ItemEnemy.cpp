@@ -18,13 +18,18 @@ void C_ItemEnemy::Init(C_GameScene* a_pGameScene)
 	m_pGameScene = a_pGameScene;
 }
 
-void C_ItemEnemy::Update()
+void C_ItemEnemy::Action(const Math::Vector2 &a_playrePos)
 {
-	MoveEnemy();
+	ChangeAction();
 
 	AttackEnemy();
 
 	BenefitPlayer();
+}
+
+void C_ItemEnemy::Update()
+{
+	CommitMove();
 
 	UpdateMatrix();
 }
@@ -46,7 +51,19 @@ void C_ItemEnemy::Activate()
 {
 }
 
-void C_ItemEnemy::MoveEnemy()
+void C_ItemEnemy::ChangeAction(const Math::Vector2& a_playerPos)
+{
+}
+
+void C_ItemEnemy::MoveEscape()
+{
+}
+
+void C_ItemEnemy::MoveStop()
+{
+}
+
+void C_ItemEnemy::MoveParallel()
 {
 }
 
