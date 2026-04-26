@@ -27,6 +27,10 @@ void C_GameScene::Init()
 	EFFECTMANAGER.Init(this);
 
 	if(ENEMYMANAGER.GetNormalEnemy() == nullptr)ENEMYMANAGER.SpawnNormalEnemy();	//NULLチェックを入れると1体しか生成されなくなる
+	if(ENEMYMANAGER.GetLuckyEnemy() == nullptr)ENEMYMANAGER.SpawnLuckyEnemy();
+	if(ENEMYMANAGER.GetAreaEnemy() == nullptr)ENEMYMANAGER.SpawnAreaEnemy();
+	if(ENEMYMANAGER.GetItemEnemy() == nullptr)ENEMYMANAGER.SpawnItemEnemy();
+	if(ENEMYMANAGER.GetBoss() == nullptr)ENEMYMANAGER.SpawnBoss();
 }
 
 void C_GameScene::Update()

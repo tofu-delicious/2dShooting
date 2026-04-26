@@ -67,9 +67,11 @@ void C_NormalEnemy::UpdateMatrix()
 
 void C_NormalEnemy::Activate()
 {
+	//m_pos = { Rnd(-600,600),Rnd(100,200) };
+	m_pos = { -600,200 };
+	m_move = { 0.0f,0.0f };
+
 	m_isActive = true;		//表示状態へ移行
-	m_pos = { Rnd(-600,600),Rnd(100,200) };
-	//m_move = { 0.0f,0.0f };
 }
 
 void C_NormalEnemy::ChangeAction(const Math::Vector2 &a_playerPos)
@@ -78,11 +80,11 @@ void C_NormalEnemy::ChangeAction(const Math::Vector2 &a_playerPos)
 	float distance = CalcDistance(a_playerPos, m_pos);
 
 	//距離が100以下だった場合は「垂直移動」
-	if (distance <= 100) { MoveEscape(); }
+	//if (distance <= 100) { MoveEscape(); }
 	//距離が100より大きく300以下だった場合は「停止」
-	else if (distance <= 300) { MoveStop(); }
+	//else if (distance <= 300) { MoveStop(); }
 	//距離が300より大きい場合は「平行移動
-	else if (distance > 300) { MoveParallel(); }
+	//else if (distance > 300) { MoveParallel(); }
 }
 
 void C_NormalEnemy::MoveEscape()
