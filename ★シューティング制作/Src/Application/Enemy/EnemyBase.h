@@ -33,15 +33,6 @@ public:
 
 	//“G‚Ìs“®ƒpƒ^[ƒ“‚ğØ‚è‘Ö‚¦‚é
 	virtual void ChangeAction(const Math::Vector2& a_playerPos = { 0,0 }){}
-	
-	//“¦‚°‚é
-	virtual void MoveEscape(){}
-
-	//‹}’â~
-	virtual void MoveStop(){}
-
-	//•½sˆÚ“®
-	virtual void MoveParallel(){}
 
 	//“G‚ÌUŒ‚ˆ—
 	virtual void AttackEnemy() = 0;

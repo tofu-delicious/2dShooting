@@ -79,33 +79,23 @@ void C_NormalEnemy::ChangeAction(const Math::Vector2 &a_playerPos)
 	//自身とプレイヤーとの距離を測る
 	float distance = CalcDistance(a_playerPos, m_pos);
 
-	//距離が100以下だった場合は「垂直移動」
-	//if (distance <= 100) { MoveEscape(); }
 	//距離が100より大きく300以下だった場合は「停止」
-	//else if (distance <= 300) { MoveStop(); }
+	if (distance <= 300) { MoveStop(); }
 	//距離が300より大きい場合は「平行移動
-	//else if (distance > 300) { MoveParallel(); }
+	else{ MoveTrans(); }
 }
 
-void C_NormalEnemy::MoveEscape()
-{
-	m_rotate += 1.0f;
-	if (m_rotate >= 360.0f) m_rotate -= 360.0f;
-	float radian = CalcRadian(m_rotate);
-	m_move.y = sinf(radian);
-}
-
-void C_NormalEnemy::MoveStop()
-{
-	m_move = { 0,0 };
-}
-
-void C_NormalEnemy::MoveParallel()
+void C_NormalEnemy::MoveTrans()
 {
 	m_rotate += 1.0f;
 	if (m_rotate >= 360.0f) m_rotate -= 360.0f;
 	float radian = CalcRadian(m_rotate);
 	m_move.x = sinf(radian);
+}
+
+void C_NormalEnemy::MoveStop()
+{
+	m_move = { 0,0 };
 }
 
 void C_NormalEnemy::AttackEnemy()

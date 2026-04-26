@@ -61,18 +61,6 @@ void C_ItemEnemy::ChangeAction(const Math::Vector2& a_playerPos)
 {
 }
 
-void C_ItemEnemy::MoveEscape()
-{
-}
-
-void C_ItemEnemy::MoveStop()
-{
-}
-
-void C_ItemEnemy::MoveParallel()
-{
-}
-
 void C_ItemEnemy::AttackEnemy()
 {
 }

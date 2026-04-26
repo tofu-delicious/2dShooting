@@ -62,18 +62,6 @@ void C_Boss::ChangeAction(const Math::Vector2& a_playerPos)
 {
 }
 
-void C_Boss::MoveEscape()
-{
-}
-
-void C_Boss::MoveStop()
-{
-}
-
-void C_Boss::MoveParallel()
-{
-}
-
 void C_Boss::AttackEnemy()
 {
 }

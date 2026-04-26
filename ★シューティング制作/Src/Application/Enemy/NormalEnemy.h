@@ -26,14 +26,11 @@ public:
 	//敵の行動パターンを切り替える
 	void ChangeAction(const Math::Vector2& a_playerPos)override;
 
-	//逃げる
-	void MoveEscape()override;
+	//平行移動
+	void MoveTrans();
 
 	//急停止する
-	void MoveStop()override;
-
-	//平行移動
-	void MoveParallel()override;
+	void MoveStop();
 
 	//敵の攻撃
 	void AttackEnemy() override;
