@@ -14,3 +14,4 @@ StaticElec Texture/Effect/StaticElectricity.png
 ShockWave Texture/Effect/ShockWave.png
 ChargeAbsorption Texture/Effect/ChargeAbsorption.png
 Explosion Texture/Effect/Explosion.png
+Area Texture/Chara/Enemy/Area.png

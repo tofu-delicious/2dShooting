@@ -44,6 +44,9 @@ public:
 	//衝突処理
 	void OnHit()override;
 
+	//このクラスの削除条件を変更する（通常はIsActive()がfalseのときに削除される）
+	bool IsDeletable() override { return !m_isActive; }
+
 	//========== ゲッター =========
 
 private:

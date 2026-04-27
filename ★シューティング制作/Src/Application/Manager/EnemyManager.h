@@ -52,7 +52,7 @@ public:
 	{
 		C_AreaEnemy* area = new C_AreaEnemy();
 		area->Init(m_pGameScene);
-		area->SetTex(TEXTUREMANAGER.GetTex("AreaEnemy"));
+		area->SetTex(TEXTUREMANAGER.GetTex("AreaEnemy"),TEXTUREMANAGER.GetTex("Area"));
 		area->Activate();
 		m_enemies.push_back(area);
 	}
@@ -93,7 +93,7 @@ public:
 			(*it)->Update();
 
 			//非表示状態のエフェクトはメモリ解放する
-			if (!(*it)->IsActive())
+			if ((*it)->IsDeletable())
 			{
 				delete (*it);				//メモリ解放
 				it = m_enemies.erase(it);	//erase関数は、引数の要素を削除した後、その要素よりも後に位置していたデータが前に詰めてくる（空間を自動的になくす）性質を持つ。

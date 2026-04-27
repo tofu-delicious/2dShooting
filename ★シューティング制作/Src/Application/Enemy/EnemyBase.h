@@ -52,6 +52,9 @@ public:
 	//弾を撃つタイミングを判定する処理
 	virtual bool IsReady();
 
+	//クラス削除時の追加条件
+	virtual bool IsDeletable() = 0;
+
 	//========= ゲッター ==========
 	//座標情報を取得する
 	virtual Math::Vector2 GetPos()const{ return m_pos; }
